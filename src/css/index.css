@@ -1,0 +1,40 @@
+#web {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 85vh; }
+  #web main,
+  #web aside {
+    margin: 5px; }
+  #web main {
+    height: 58vh;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column-reverse;
+    overflow-y: auto; }
+    #web main .line {
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+      #web main .line .result {
+        width: 20px;
+        height: 20px; }
+  #web aside {
+    border-left: 2px solid #80808033; }
+    #web aside #check {
+      font-size: 47px;
+      background-color: lightgreen; }
+      #web aside #check i {
+        color: white;
+        margin-left: 1.5px; }
+  #web .hole,
+  #web .result,
+  #web aside div {
+    background-color: grey;
+    border-radius: 25px;
+    margin: 3px;
+    border: 1px solid #0000003d; }
+  #web .hole,
+  #web aside div {
+    width: 50px;
+    height: 50px; }
