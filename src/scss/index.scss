@@ -1,3 +1,9 @@
+@import "./common/util/variables";
+@import "./common/util/colors.scss";
+@import "./common/util/mixins";
+body{
+    background: radial-gradient($background-color-main, $background-color-secondary);
+}
 #web {
     display: flex;
     align-items: flex-end;
@@ -19,22 +25,27 @@
             align-items: center;
             justify-content: center;
             .result {
-                width: 20px;
-                height: 20px;
+                width: 10px;
+                height: 10px;
             }
             .hole{
                 cursor: pointer;
             }
         }
     }
+    
     aside {
-        border-left: 2px solid #80808033;
+        border-left: 2px solid $aside-border;
         #check {
-            font-size: 47px;
-            background-color: lightgreen;
+            font-size:23px;
+            background-color: $check-bg;
             i {
-                color: white;
+                color: $check-color;
                 margin-left: 1.5px;
+                transition: all .4s;
+                &:hover{
+                    color: $check-hover-color;   
+                }
             }
         }
         div{
@@ -45,14 +56,19 @@
     .hole,
     .result,
     aside div {
-        background-color: grey;
+        background-color: $ball-color;
         border-radius: 25px;
         margin: 3px;
-        border: 1px solid #0000003d;
+        border: 1px solid $ball-border-color;
     }
     .hole,
     aside div {
-        width: 50px;
-        height: 50px;
+        width: 25px;
+        height: 25px;
     }
+
+    @media screen and (min-width: $breakpoint-mobile) {
+        @import "index-desktop.module";
+    }
+    
 }

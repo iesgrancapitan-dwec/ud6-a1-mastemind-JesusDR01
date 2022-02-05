@@ -1,3 +1,6 @@
+body {
+  background: radial-gradient(#a0ffbe, #95e71252); }
+
 #web {
   display: flex;
   align-items: flex-end;
@@ -17,18 +20,21 @@
       align-items: center;
       justify-content: center; }
       #web main .line .result {
-        width: 20px;
-        height: 20px; }
+        width: 10px;
+        height: 10px; }
       #web main .line .hole {
         cursor: pointer; }
   #web aside {
     border-left: 2px solid #80808033; }
     #web aside #check {
-      font-size: 47px;
+      font-size: 23px;
       background-color: lightgreen; }
       #web aside #check i {
         color: white;
-        margin-left: 1.5px; }
+        margin-left: 1.5px;
+        transition: all .4s; }
+        #web aside #check i:hover {
+          color: green; }
     #web aside div {
       cursor: pointer; }
   #web .hole,
@@ -40,5 +46,14 @@
     border: 1px solid #0000003d; }
   #web .hole,
   #web aside div {
-    width: 50px;
-    height: 50px; }
+    width: 25px;
+    height: 25px; }
+  @media screen and (min-width: 440px) {
+    #web main .line .result {
+      width: 20px;
+      height: 20px; }
+    #web .hole, #web aside div {
+      width: 50px;
+      height: 50px; }
+    #web aside #check {
+      font-size: 47px; } }
