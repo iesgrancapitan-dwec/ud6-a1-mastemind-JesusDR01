@@ -22,6 +22,42 @@ const MasterMind = (function () {
     const MAX_REQUESTED_COLORS = 4;
     const REPEAT_WINNER_COLORS = true;
     let winnerColors = [];
+
+    const front = {
+        resetBackground: function () {
+            this.style.backgroundColor = "grey";
+            this.setAttribute("data-free", true);
+        },
+        checkLine: function () {
+            const hints = this.check(front.currentHoles.map((el) => el.style.backgroundColor));
+            const blackElements = front.currentResults.splice(0, hints.black);
+            const whiteElements = front.currentResults.splice(0, hints.white);
+            blackElements.forEach((el) => (el.style.backgroundColor = "black"));
+            whiteElements.forEach((el) => (el.style.backgroundColor = "white"));
+            if (blackElements.length === 4) {
+                this.showWin();
+            }
+        },
+        createLine: function () {
+            this.currentHoles.forEach((el) =>
+                el.removeEventListener("click", front.resetBackground)
+            );
+            const currentLine = front.defaultLine.cloneNode(true);
+            this.main.append(currentLine);
+            this.currentHoles = Array.from(currentLine.querySelectorAll(".hole"));
+            this.currentResults = Array.from(currentLine.querySelectorAll(".result"));
+            this.main.scrollTop -= front.firstLine.scrollHeight + 1;
+        },
+        populate: function () {
+            this.main = document.querySelector("main");
+            this.defaultMain = this.main.cloneNode(true);
+            this.firstLine = document.querySelector(".line");
+            this.defaultLine = this.firstLine.cloneNode(true);
+            this.currentHoles = Array.from(this.firstLine.querySelectorAll(".hole"));
+            this.currentResults = Array.from(this.firstLine.querySelectorAll(".result"));
+        },
+    };
+
     return {
         init() {
             if (REPEAT_WINNER_COLORS) {
@@ -58,66 +94,60 @@ const MasterMind = (function () {
             );
             return output;
         },
+        createGame() {
+            this.init();
+            front.populate();
+            console.log(this.show());
+            console.log(front);
+        },
+        addBehaviour() {
+            document.querySelectorAll("aside div:not(#check)").forEach((colorBall) => {
+                colorBall.style.backgroundColor = colorBall.id;
+                colorBall.addEventListener("click", () => {
+                    const firstFreeHole = front.currentHoles.find(
+                        (hole) => hole.dataset.free === "true"
+                    );
+                    if (firstFreeHole) {
+                        firstFreeHole.style.backgroundColor = colorBall.id;
+                        firstFreeHole.setAttribute("data-free", false);
+                        firstFreeHole.addEventListener("click", front.resetBackground);
+                    }
+                });
+            });
+            document.querySelector("#check").addEventListener("click", () => {
+                if (front.currentHoles.every((el) => el.dataset.free === "false")) {
+                    front.checkLine.apply(this);
+                    front.createLine();
+                }
+            });
+        },
+        showWin() {
+            Swal.fire({
+                title: "You won!!",
+                width: 600,
+                padding: "3em",
+                color: "#716add",
+                background: "#fff url(https://sweetalert2.github.io/images/trees.png)",
+                backdrop: `
+                            rgba(0,0,123,0.4)
+                            url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                            left top
+                            no-repeat
+                            `,
+                confirmButtonText: "Play again",
+            }).then(() => {
+                this.init();
+                this.show();
+                front.main.innerHTML = front.defaultMain.innerHTML;
+                this.createGame();
+                //En lugar de borrar los event Listeners utilizo un objeto privado que representa el estado del mastermind (Front)
+                //De esta manera, actualizo el main y los selectores, de modo que reutilizo los eventListeners pre-existentes.
+            });
+        },
     };
 })();
 
 document.addEventListener("DOMContentLoaded", () => {
-    MasterMind.init();
-    const firstLine = document.querySelector(".line");
-    let main = document.querySelector("main");
-    let defaultLine = firstLine.cloneNode(true);
-    let defaultMain = main.cloneNode(true);
-    let currentHoles = Array.from(firstLine.querySelectorAll(".hole"));
-    let currentResults = Array.from(firstLine.querySelectorAll(".result"));
-    console.log(MasterMind.show());
-    const resetBackground = function () {
-        this.style.backgroundColor = "grey";
-        this.setAttribute("data-free", true);
-    };
-    document.querySelectorAll("aside div:not(#check)").forEach((el) => {
-        el.style.backgroundColor = el.id;
-        el.addEventListener("click", () => {
-            const firstFreeHole = currentHoles.find((el) => el.dataset.free === "true");
-            if (firstFreeHole) {
-                firstFreeHole.style.backgroundColor = el.id;
-                firstFreeHole.setAttribute("data-free", false);
-                firstFreeHole.addEventListener("click", resetBackground);
-            }
-        });
-    });
-    document.querySelector("#check").addEventListener("click", () => {
-        if (currentHoles.every((el) => el.dataset.free === "false")) {
-            const hints = MasterMind.check(currentHoles.map((el) => el.style.backgroundColor));
-            const blackElements = currentResults.splice(0, hints.black);
-            const whiteElements = currentResults.splice(0, hints.white);
-            blackElements.forEach((el) => (el.style.backgroundColor = "black"));
-            whiteElements.forEach((el) => (el.style.backgroundColor = "white"));
-            if (blackElements.length === 4) {
-                Swal.fire({
-                    title: "You won!!",
-                    width: 600,
-                    padding: "3em",
-                    color: "#716add",
-                    background: "#fff url(https://sweetalert2.github.io/images/trees.png)",
-                    backdrop: `
-                      rgba(0,0,123,0.4)
-                      url("https://sweetalert2.github.io/images/nyan-cat.gif")
-                      left top
-                      no-repeat
-                    `,
-                    confirmButtonText: "Play again",
-                }).then(() => {
-                    MasterMind.init();
-                    MasterMind.show();
-                    main.innerHTML = defaultMain.innerHTML;
-                });
-            }
-            currentHoles.forEach((el) => el.removeEventListener("click", resetBackground));
-            const currentLine = defaultLine.cloneNode(true);
-            main.append(currentLine);
-            currentHoles = Array.from(currentLine.querySelectorAll(".hole"));
-            currentResults = Array.from(currentLine.querySelectorAll(".result"));
-            main.scrollTop -= firstLine.scrollHeight + 1;
-        }
-    });
+    MasterMind.createGame();
+    MasterMind.addBehaviour();
 });

@@ -22,6 +22,9 @@
                 width: 20px;
                 height: 20px;
             }
+            .hole{
+                cursor: pointer;
+            }
         }
     }
     aside {
@@ -33,6 +36,9 @@
                 color: white;
                 margin-left: 1.5px;
             }
+        }
+        div{
+            cursor: pointer;
         }
     }
 

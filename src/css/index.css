@@ -19,6 +19,8 @@
       #web main .line .result {
         width: 20px;
         height: 20px; }
+      #web main .line .hole {
+        cursor: pointer; }
   #web aside {
     border-left: 2px solid #80808033; }
     #web aside #check {
@@ -27,6 +29,8 @@
       #web aside #check i {
         color: white;
         margin-left: 1.5px; }
+    #web aside div {
+      cursor: pointer; }
   #web .hole,
   #web .result,
   #web aside div {
