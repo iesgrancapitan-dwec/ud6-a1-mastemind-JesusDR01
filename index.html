@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta name="author" content="Jesus Diaz Rivas" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jesús Díaz Rivas</title>
+    <!-- Main js -->
+    <script type="text/javascript" src="./index.js"></script>
+    <style>
+        label {
+            display: block;
+            width: 150px;
+        }
+
+        section {
+            margin: 10px 0px;
+        }
+
+        input[type='checkbox'] {
+            filter: var(--check-primary, none);
+        }
+
+        input[type='checkbox']:checked {
+            filter: invert(9%) sepia(12%) saturate(493%) hue-rotate(190deg) brightness(96%) contrast(94%);
+        }
+
+        input[type='radio']:after {
+            width: 15px;
+            height: 15px;
+            border-radius: 15px;
+            top: -2px;
+            left: -1px;
+            position: relative;
+            /* Esto es súper interesante: puedes ponerle por defecto una variable, y si algo falla, puedes meterle la variable en js y te la coge */
+            background-color: var(--check-primary, none);
+            content: '';
+            display: inline-block;
+            visibility: visible;
+            border: 2px solid white;
+        }
+
+        input[type='radio']:checked:after {
+            width: 15px;
+            height: 15px;
+            border-radius: 15px;
+            top: -2px;
+            left: -1px;
+            position: relative;
+            background-color: #ffa500;
+            content: '';
+            display: inline-block;
+            visibility: visible;
+            border: 2px solid white;
+        }
+
+        select,
+        #textfield-required input,
+        #number,
+        #frmEmailA,
+        #dni,
+        #date,
+        #frmPhoneNumA,
+        #url {
+            background-color: var(--check-primary, none);
+        }
+    </style>
+</head>
+
+<body>
+    <noscript>
+        <p>Debes activar javascript para activar todas las funcionalidades del sitio!! </p>
+    </noscript>
+  
+</body>
+
+</html>
