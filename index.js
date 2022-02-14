@@ -8,7 +8,16 @@
  */
 // {
 const MasterMind = (function () {
-    const ALL_COLORS = ["hotpink", "rebeccapurple", "red", "deepskyblue", "limegreen", "yellow"];
+    const ALL_COLORS = [
+        "red",
+        "white",
+        "black",
+        "yellow",
+        "orange",
+        "saddlebrown",
+        "blue",
+        "green",
+    ];
     const MAX_REQUESTED_COLORS = 4;
     const REPEAT_WINNER_COLORS = true;
     let winnerColors = [];
@@ -53,5 +62,7 @@ const MasterMind = (function () {
 
 document.addEventListener("DOMContentLoaded", () => {
     MasterMind.init();
+    MasterMind.show();
+    console.log("Usa MasterMind.check([...]) para comprobar las coincidencias");
 });
 // }

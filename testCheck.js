@@ -1,3 +1,8 @@
+//Usa el comando: node testcheck.js 
+//Para comprobar los input y outputs 
+//Podría haber usado jest para hacer los tests, pero en esta primera versión quería centrarme en el código
+//PD: He realizado TDD para desarrollar la lógica del MasterMind.
+
 const test2 = () => {
     const solution = ["red", "red", "yellow", "green"];
     const input = ["red", "red", "red", "red"];
